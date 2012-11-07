@@ -24,7 +24,9 @@ public class Library {
     }
     
     public void addNewSong(Song newSong){
-        mySongLibrary.add(newSong);
+        if(newSong != null){
+            mySongLibrary.add(newSong);
+        }
     }
     
     public void displaySongs(){
