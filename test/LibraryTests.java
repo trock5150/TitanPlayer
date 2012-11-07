@@ -125,6 +125,9 @@ public class LibraryTests {
         myLibrary.addNewSong(new Song("Nothing But A Good Time", "Poison","Open Up And Say AHHH","c:\\mymusic\\Poison\\OpenUp\\NothingButAGoodTime.mp3"));
         myLibrary.addNewSong(new Song("Crystal Ball", "Styx","Crystal Ball","c:\\mymusic\\Styx\\CrystalBall\\CrystalBall.mp3"));
         myLibrary.addNewSong(new Song("Crystal Ball", "Styx","Caught In The Act","c:\\mymusic\\Styx\\CaughtInTheAct\\CrystalBall.mp3"));
+        myLibrary.addNewSong(null);
+        
+        assertEquals(4,myLibrary.getSongCount());
                 
         PlayList myPlaylist = new PlayList();
         myPlaylist.setNewName("My Playlist");
