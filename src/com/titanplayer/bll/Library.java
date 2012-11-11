@@ -70,4 +70,40 @@ public class Library {
         
         return songInfo;
     }
+
+    public void sortByTitle() {
+        
+        SortedSet<String> sortSongs = new TreeSet<String>();//(new SongTitleComparator());
+        String songStringByTitle = null;
+        
+        for(Song librarySong : mySongLibrary){
+            songStringByTitle = librarySong.showTitle(librarySong)+","+librarySong.showArtist(librarySong)+
+                    ","+librarySong.showAlbum(librarySong)+","+librarySong.showPath(librarySong);
+            sortSongs.add(songStringByTitle);
+        }
+        
+        for(String songInfo : sortSongs){
+            System.out.println(songInfo);
+        }
+        
+    }
+    
+    public void sortByArtist() {
+        
+        SortedSet<String> sortSongs = new TreeSet<String>();//(new SongTitleComparator());
+        String songStringByArtist = null;
+        
+        for(Song librarySong : mySongLibrary){
+            songStringByArtist = librarySong.showArtist(librarySong)+","+librarySong.showTitle(librarySong)+
+                    ","+librarySong.showAlbum(librarySong)+","+librarySong.showPath(librarySong);
+            sortSongs.add(songStringByArtist);
+        }
+        
+        for(String songInfo : sortSongs){
+            String[] displaySongInfo = songInfo.split(",");
+            
+            System.out.println(displaySongInfo[1]+","+displaySongInfo[0]+","+displaySongInfo[2]+displaySongInfo[3]);
+        }
+        
+    }
 }
