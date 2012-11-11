@@ -11,6 +11,8 @@ import com.titanplayer.bll.Library;
 import com.titanplayer.bll.PlayList;
 import com.titanplayer.bll.Song;
 import com.titanplayer.bll.PlayASong;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  *
@@ -333,5 +335,30 @@ public class LibraryTests {
             }
         }while(keyHit != "Stop");
     }
+    
+    @Test
+    public void sortLibraryByTitleTest(){
+        //Build test library
+        Library myLibrary = new Library();
+        
+        myLibrary.addNewSong(new Song("Roll With The Changes", "REO Speedwagon","You Can Tune A Piano But You Can't Tune A Fish"
+                ,"c:\\mymusic\\REO\\Tuna\\RollWithTheChanges.mp3"));
+        myLibrary.addNewSong(new Song("Nothing But A Good Time", "Poison","Open Up And Say AHHH","c:\\mymusic\\Poison\\OpenUp\\NothingButAGoodTime.mp3"));
+        myLibrary.addNewSong(new Song("Crystal Ball", "Styx","Crystal Ball","c:\\mymusic\\Styx\\CrystalBall\\CrystalBall.mp3"));
+        myLibrary.addNewSong(new Song("Crystal Ball", "Styx","Caught In The Act","c:\\mymusic\\Styx\\CaughtInTheAct\\CrystalBall.mp3"));
+        myLibrary.addNewSong(null);
+        
+        System.out.println("\nSort Library:  Songs prior to sort:");
+        myLibrary.displaySongs();
+        
+        System.out.println("\nSort Library:  Songs sorted by Title:");
+        myLibrary.sortByTitle();
+        
+        System.out.println("\nSort Library:  Songs sorted by Artist:");
+        myLibrary.sortByArtist();
+        
+    }
+    
+    
 }
 
