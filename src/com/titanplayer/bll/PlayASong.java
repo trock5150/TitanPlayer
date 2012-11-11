@@ -12,17 +12,15 @@ import java.util.logging.Logger;
  * @author Rocky
  */
 public class PlayASong extends Thread{
-    
+
     public void run(){
-        System.out.println("Playing the song in a new thread");
-        try {
-            //built in 2 minute sleep period to simulate a short song
-            Thread.sleep(200000);
-        } catch (InterruptedException ex) {
-            System.out.println("Skipping to next song!");
-        }
-        
+            System.out.println("Playing the song in a new thread");
+            try {
+                //built in 2 minute sleep period to simulate a short song
+                Thread.sleep(200000);
+            } catch (InterruptedException ex) {
+                System.out.println("Interrupt was encountered!");
+
+            }
     }
-    
-    
 }
