@@ -159,6 +159,8 @@ public class LibraryTests {
     
     @Test
     public void skipASongTest() throws InterruptedException{
+        String keyHit = null;
+        
         //Build test library
         Library myLibrary = new Library();
         
@@ -183,7 +185,7 @@ public class LibraryTests {
         //Print out playlist for reference
         for(Song eachSong : selectedSongs){
             int libraryLocation = myLibrary.getSongLocation(eachSong);
-            System.out.println("libraryLocation = " + libraryLocation);
+            //System.out.println("libraryLocation = " + libraryLocation);
             myPlaylist.setLibraryLocation(libraryLocation);
         }
 
@@ -200,31 +202,136 @@ public class LibraryTests {
         }
         
         System.out.println("\nFor this test, each song has a simulated 2 minute play time...");
-        System.out.println("The loop below will send an interrupt to the \"PlayASong\" thread after 50 Seconds...");
+        System.out.println("The loop below will send an interrupt to the \"PlayASong\" thread after 20 Seconds...");
         System.out.println("The display will show that the song was interrupted and the next song starts.\n");
         
-        for(Song currentSong: selectedSongs){
-            
+        int s = 0;
+        do{
+            if(s > selectedSongs.size()){
+                    break;
+            }
+            for(Song currentSong: selectedSongs){
+                keyHit = null;
+                s++;
+                
             //Song must play in a new thread in order to allow main thread to interrupt it
-            Thread t = new Thread(new PlayASong());
-            t.start();
+                Thread t = new Thread(new PlayASong());
+                t.start();
             
-            int i=0;
+                int i=0;
             
             //this will simulate the 'Next Song button' being pressed to skip to the next song
-            while(t.isAlive()){
-                if (i > 0){
-                    System.out.println(i*10 + " Seconds into playing song: "+currentSong.showPath(currentSong));
+                while(t.isAlive() && s <= selectedSongs.size()){
+                    if (i > 0){
+                        System.out.println(i*10 + " Seconds into playing song: "+currentSong.showPath(currentSong));
+                    }
+                
+                    t.join(10000);
+                    i++;
+                
+                    if(i == 2 && t.isAlive()){
+                        keyHit = "Skip";
+                    }
+                    
+                    if(keyHit != null){
+                        t.interrupt();
+                        break;
+                    }
                 }
-                
-                t.join(10000);
-                i++;
-                
-                if(i == 5 && t.isAlive()){
-                    t.interrupt();
+                if(keyHit == "Stop"){
+                    break;
                 }
             }
-        }
+        }while(keyHit != "Stop");
     }
+    
+    
+    @Test
+    public void stopASongTest() throws InterruptedException{
         
+        String keyHit = null;
+        //Build test library
+        Library myLibrary = new Library();
+        
+        myLibrary.addNewSong(new Song("Roll With The Changes", "REO Speedwagon","You Can Tune A Piano But You Can't Tune A Fish"
+                ,"c:\\mymusic\\REO\\Tuna\\RollWithTheChanges.mp3"));
+        myLibrary.addNewSong(new Song("Nothing But A Good Time", "Poison","Open Up And Say AHHH","c:\\mymusic\\Poison\\OpenUp\\NothingButAGoodTime.mp3"));
+        myLibrary.addNewSong(new Song("Crystal Ball", "Styx","Crystal Ball","c:\\mymusic\\Styx\\CrystalBall\\CrystalBall.mp3"));
+        myLibrary.addNewSong(new Song("Crystal Ball", "Styx","Caught In The Act","c:\\mymusic\\Styx\\CaughtInTheAct\\CrystalBall.mp3"));
+        myLibrary.addNewSong(null);
+        
+        //build test playlist
+        PlayList myPlaylist = new PlayList();
+        myPlaylist.setNewName("My Playlist");
+        
+        List<Song> selectedSongs = new ArrayList<Song>();
+        
+        selectedSongs.add(new Song("Roll With The Changes", "REO Speedwagon","You Can Tune A Piano But You Can't Tune A Fish"
+                ,"c:\\mymusic\\REO\\Tuna\\RollWithTheChanges.mp3"));
+        selectedSongs.add(new Song("Crystal Ball", "Styx","Caught In The Act","c:\\mymusic\\Styx\\CaughtInTheAct\\CrystalBall.mp3"));
+        selectedSongs.add(new Song("Crystal Ball", "Styx","Crystal Ball","c:\\mymusic\\Styx\\CrystalBall\\CrystalBall.mp3"));
+        
+        //Print out playlist for reference
+        for(Song eachSong : selectedSongs){
+            int libraryLocation = myLibrary.getSongLocation(eachSong);
+            //System.out.println("libraryLocation = " + libraryLocation);
+            myPlaylist.setLibraryLocation(libraryLocation);
+        }
+
+        assertEquals(3,myPlaylist.getPlaylistSize());
+        
+        int searchIndex = 0;
+        String songInfo = null;
+        
+        System.out.println("Playlist Test 3: Playlist \"" + myPlaylist.getPlaylistName() + "\" consists of the following songs:\n" );
+        for(int i = 0;i < myPlaylist.getPlaylistSize();i++){
+            searchIndex = myPlaylist.returnPlaylistEntry(i);
+            songInfo = myLibrary.displayPlayListSong(searchIndex);
+            System.out.print(songInfo + "\n");
+        }
+        
+        System.out.println("\nFor this test, each song has a simulated 2 minute play time...");
+        System.out.println("The loop below will send an interrupt to the \"PlayASong\" thread after 20 Seconds...");
+        System.out.println("The display will show that playing was stopped.\n");
+        int s = 0;
+        
+        do{
+            if(s > selectedSongs.size()){
+                    break;
+            }
+            for(Song currentSong: selectedSongs){
+                keyHit = null;
+                s++;
+                
+            //Song must play in a new thread in order to allow main thread to interrupt it
+                Thread t = new Thread(new PlayASong());
+                t.start();
+            
+                int i=0;
+            
+            //this will simulate the 'Next Song button' being pressed to skip to the next song
+                while(t.isAlive() && s <= selectedSongs.size()){
+                    if (i > 0){
+                        System.out.println(i*10 + " Seconds into playing song: "+currentSong.showPath(currentSong));
+                    }
+                
+                    t.join(10000);
+                    i++;
+                
+                    if(i == 2 && t.isAlive()){
+                        keyHit = "Stop";
+                    }
+                    
+                    if(keyHit != null){
+                        t.interrupt();
+                        break;
+                    }
+                }
+                if(keyHit == "Stop"){
+                    break;
+                }
+            }
+        }while(keyHit != "Stop");
+    }
 }
+
