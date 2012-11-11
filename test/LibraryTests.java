@@ -199,6 +199,10 @@ public class LibraryTests {
             System.out.print(songInfo + "\n");
         }
         
+        System.out.println("\nFor this test, each song has a simulated 2 minute play time...");
+        System.out.println("The loop below will send an interrupt to the \"PlayASong\" thread after 50 Seconds...");
+        System.out.println("The display will show that the song was interrupted and the next song starts.\n");
+        
         for(Song currentSong: selectedSongs){
             
             //Song must play in a new thread in order to allow main thread to interrupt it
