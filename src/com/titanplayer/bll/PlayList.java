@@ -5,6 +5,7 @@
 package com.titanplayer.bll;
 
 import java.util.*;
+import javax.management.BadStringOperationException;
 
 /**
  *
@@ -12,13 +13,22 @@ import java.util.*;
  * Insert comment to allow push
  */
 public class PlayList{
-    
+
     private String playlistName = null;
     private List<Integer> libraryLocation = new ArrayList<Integer>();
+
+    public PlayList(String newPlaylistName) throws Exception {
+        if(newPlaylistName.isEmpty())
+            throw new BadStringOperationException("Play List Name cannot be NULL!");
+        else
+            playlistName = newPlaylistName;
+    }
     
-    public void setNewName(String myPlaylist) {
+    /*public void setNewName(String myPlaylist) {
         playlistName = myPlaylist;
     }
+    * 
+    */
     
     public String getPlaylistName(){
         return playlistName;
