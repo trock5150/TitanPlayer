@@ -96,7 +96,7 @@ public class EnterNewPlaylistName extends javax.swing.JFrame {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         // TODO add your handling code here:
-        String newPlaylistName = playlistNameLabel.getText();
+        String newPlaylistName = playlistNameInput.getText();
         
         //Playlist.setNewName(newPlaylistName);
         dispose();
