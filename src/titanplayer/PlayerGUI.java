@@ -4,6 +4,8 @@
  */
 package titanplayer;
 
+import javax.swing.JFileChooser;
+
 /**
  *
  * @author Rocky
@@ -53,6 +55,9 @@ public class PlayerGUI extends javax.swing.JFrame {
         playlistSelection = new javax.swing.JComboBox();
         newPlaylist = new javax.swing.JButton();
         savePlaylist2 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        addToLibraryMenuItem = new javax.swing.JMenu();
+        newPlaylistMenuItem = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Titan Player");
@@ -136,106 +141,134 @@ public class PlayerGUI extends javax.swing.JFrame {
             }
         });
 
+        addToLibraryMenuItem.setText("Add Song To Library");
+        addToLibraryMenuItem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addToLibraryMenuItemMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(addToLibraryMenuItem);
+
+        newPlaylistMenuItem.setText("New Playlist");
+        newPlaylistMenuItem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                newPlaylistMenuItemMouseClicked(evt);
+            }
+        });
+        newPlaylistMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newPlaylistMenuItemActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(newPlaylistMenuItem);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(169, 169, 169)
-                        .addComponent(playCurrentSong)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pauseCurrentSong)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(stopCurrentSong)
-                        .addGap(107, 107, 107)
-                        .addComponent(playPreviousSong)
-                        .addGap(18, 18, 18)
-                        .addComponent(playNextSong))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(nowPlaying)
-                        .addGap(18, 18, 18)
-                        .addComponent(currentSongTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(currentPlaceInSong))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(73, 73, 73)
-                        .addComponent(totalSongLength)))
-                .addContainerGap(110, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(sortLibraryByArtist)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(sortLibraryByTitle))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(addToLibrary)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(deleteFromLibrary))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(libraryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(librarySelection, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(libraryWindow, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(95, 95, 95)
-                                .addComponent(currentPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(169, 169, 169)
+                                .addComponent(playCurrentSong)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(pauseCurrentSong)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(stopCurrentSong)
+                                .addGap(107, 107, 107)
+                                .addComponent(playPreviousSong)
+                                .addGap(18, 18, 18)
+                                .addComponent(playNextSong))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(32, 32, 32)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(addToPlaylist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(newPlaylist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(savePlaylist2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(nowPlaying)
+                                .addGap(18, 18, 18)
+                                .addComponent(currentSongTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(currentPlaceInSong))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(73, 73, 73)
+                                .addComponent(totalSongLength))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(savePlaylist)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(deleteFromPlaylist)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(playlistSelection, 0, 249, Short.MAX_VALUE)
-                            .addComponent(playlistWindow))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(libraryWindow, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(35, 35, 35)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(addToPlaylist)
+                                    .addComponent(newPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(savePlaylist2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(sortLibraryByArtist)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(sortLibraryByTitle))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(addToLibrary)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(deleteFromLibrary))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(libraryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(librarySelection, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(75, 75, 75)
+                                .addComponent(currentPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(playlistWindow, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addComponent(savePlaylist)
+                                .addGap(18, 18, 18)
+                                .addComponent(deleteFromPlaylist))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(playlistSelection, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(libraryLabel)
-                    .addComponent(currentPlaylist)
                     .addComponent(librarySelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(currentPlaylist)
                     .addComponent(playlistSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addToLibrary)
-                    .addComponent(deleteFromLibrary)
-                    .addComponent(savePlaylist)
-                    .addComponent(deleteFromPlaylist))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sortLibraryByArtist)
-                    .addComponent(sortLibraryByTitle))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(86, 86, 86)
-                        .addComponent(newPlaylist)
-                        .addGap(37, 37, 37)
-                        .addComponent(addToPlaylist)
-                        .addGap(33, 33, 33)
-                        .addComponent(savePlaylist2))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(savePlaylist)
+                            .addComponent(deleteFromPlaylist))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(92, 92, 92)
+                                .addComponent(newPlaylist)
+                                .addGap(31, 31, 31)
+                                .addComponent(addToPlaylist)
+                                .addGap(32, 32, 32)
+                                .addComponent(savePlaylist2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(48, 48, 48)
+                                .addComponent(playlistWindow, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addToLibrary)
+                            .addComponent(deleteFromLibrary))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(sortLibraryByArtist)
+                            .addComponent(sortLibraryByTitle))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(playlistWindow, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
-                            .addComponent(libraryWindow, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addComponent(libraryWindow, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(currentSongTitle)
@@ -243,7 +276,7 @@ public class PlayerGUI extends javax.swing.JFrame {
                     .addComponent(currentPlaceInSong))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(totalSongLength)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(playCurrentSong)
                     .addComponent(pauseCurrentSong)
@@ -273,6 +306,24 @@ public class PlayerGUI extends javax.swing.JFrame {
     private void savePlaylist2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_savePlaylist2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_savePlaylist2ActionPerformed
+
+    private void newPlaylistMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPlaylistMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newPlaylistMenuItemActionPerformed
+
+    private void newPlaylistMenuItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newPlaylistMenuItemMouseClicked
+        // TODO add your handling code here:
+        EnterNewPlaylistName newNameScreen = new EnterNewPlaylistName();
+        newNameScreen.setVisible(true);
+    }//GEN-LAST:event_newPlaylistMenuItemMouseClicked
+
+    private void addToLibraryMenuItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addToLibraryMenuItemMouseClicked
+        // TODO add your handling code here:
+        
+        MusicFileChooser addMusicFiles = new MusicFileChooser();
+        //addMusicFiles.setVisible(true);
+        
+    }//GEN-LAST:event_addToLibraryMenuItemMouseClicked
 
     /**
      * @param args the command line arguments
@@ -317,16 +368,19 @@ public class PlayerGUI extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addToLibrary;
+    private javax.swing.JMenu addToLibraryMenuItem;
     private javax.swing.JButton addToPlaylist;
     private javax.swing.JLabel currentPlaceInSong;
     private javax.swing.JLabel currentPlaylist;
     private javax.swing.JLabel currentSongTitle;
     private javax.swing.JButton deleteFromLibrary;
     private javax.swing.JButton deleteFromPlaylist;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JLabel libraryLabel;
     private javax.swing.JComboBox librarySelection;
     private javax.swing.JScrollPane libraryWindow;
     private javax.swing.JButton newPlaylist;
+    private javax.swing.JMenu newPlaylistMenuItem;
     private javax.swing.JLabel nowPlaying;
     private javax.swing.JButton pauseCurrentSong;
     private javax.swing.JButton playCurrentSong;
