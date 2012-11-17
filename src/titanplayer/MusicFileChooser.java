@@ -19,7 +19,7 @@ public class MusicFileChooser extends JFrame {
     public MusicFileChooser() {
 	
         JFileChooser fc = new JFileChooser();
-  
+        fc.addChoosableFileFilter(new MP3FileFilter());
         int returnVal = fc.showOpenDialog(this);
         
         File selectedFile = null;
